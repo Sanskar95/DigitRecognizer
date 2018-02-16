@@ -21,11 +21,19 @@
  View(Xpca$rotation0)
  View(Xpca$rotation)
  View(Xpca)
-Yfinal<-class.ind(Y) #converting they data frame to a matrix
-model<-nnet(Xfinal,Yfinal,size=200,softmax = TRUE,maxit = 150,MaxNWts = 800000)# training the model
+ Yfinal<-class.ind(Y) #converting they data frame to a matrix
+ model<-nnet(Xfinal,Yfinal,size=200,softmax = TRUE,maxit = 150,MaxNWts = 800000)# training the model
 Xtest<-test[,-1]
 XtestNormalised<-Xtest/255
-predicted<-predict(model,XtestNormalized,type="class")
+predicted<-predict(model,XtestNormalised,type="class")
  predicted<-as.data.frame(predicted)
-actual<-as.double(unlist(XtestNormalized[1])) #gettimng the actual outputs
+actual<-as.double(unlist(XtestNormalised[1])) #gettimng the actual outputs
 accuracy<-round(mean(actual==predicted)*100,2) #accuracy of the model
+Image=readImageImage=readImage("img_106.jpg") # its 3 
+#View(255*imageData(Image))
+vc=as.vector(255*imageData(Image))
+testValue=as.matrix(t(vc))
+testValue<-as.matrix(testValue) %*% Xpca$rotation[,1:45]
+predictedValue=predict(model,testValue,type="class")
+predictedValue
+
